@@ -14,6 +14,7 @@ def index():
     return jsonify(users)
 
 
+@blueprint.route("/signup", methods=["POST"])
 @blueprint.route("/users", methods=["POST"])
 def create():
     user_params = request.user_params
