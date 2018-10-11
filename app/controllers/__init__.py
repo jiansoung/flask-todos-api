@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from app import app
+from .concerns import exceptions
 from .concerns import exception_handler
 from app.controllers import todos_controller
 from app.controllers import items_controller

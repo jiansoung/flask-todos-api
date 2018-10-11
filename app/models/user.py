@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 
+import base64
+
 from app import db, bcrypt
 from .concerns import ModelBase
 
@@ -22,11 +24,11 @@ class User(ModelBase):
     @staticmethod
     def create(params):
         password = params['password']
-        password_digest = bcrypt.generate_password_hash(password).decode()
+        password_digest = User.generate_password_digest(password)
         user = User(
             name=params['name'], 
             email=params['email'], 
-            password_digest=password_digest
+            password_digest=password_digest,
         )
         db.session.add(user)
         db.session.commit()
@@ -43,9 +45,18 @@ class User(ModelBase):
             self.email = params['email']
         if 'password' in params:
             password = params['password']
-            password_digest = bcrypt.generate_password_hash(password).decode()
+            password_digest = User.generate_password_digest(password)
             self.password_digest = password_digest
         db.session.commit()
+
+    def authenticate(self, password):
+        password_hash = base64.b64decode(self.password_digest)
+        return bcrypt.check_password_hash(password_hash, password)
+
+    @staticmethod
+    def generate_password_digest(password):
+        password_hash = bcrypt.generate_password_hash(password)
+        return base64.b64encode(password_hash).decode()
 
     def __repr__(self):
         return '<User %r>' % self.name

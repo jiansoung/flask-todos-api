@@ -2,6 +2,8 @@
 
 from flask import Blueprint, request, jsonify
 from app.models import User
+from app.lib import Message
+from app.auth import AuthenticateUser
 from .concerns import only_allow, dict_copy
 
 __all__ = []
@@ -18,8 +20,11 @@ def index():
 @blueprint.route("/users", methods=["POST"])
 def create():
     user_params = request.user_params
-    user = User.create(user_params)
-    return jsonify(user.to_dict()), 201
+    _ = User.create(user_params)  # Exception
+    email, password = user_params['email'], user_params['password']
+    auth_token = AuthenticateUser(email, password).auth_token
+    response = { 'message': Message.account_created, 'auth_token': auth_token }
+    return jsonify(response), 201
 
 
 @blueprint.route("/users/<int:user_id>")
