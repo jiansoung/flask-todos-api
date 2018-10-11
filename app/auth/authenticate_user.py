@@ -10,7 +10,7 @@ class AuthenticateUser:
     def __init__(self, email, password):
         self.__email = email.lower()
         self.__password = password
-    
+
     @property
     def auth_token(self):
         user = self.__user
@@ -26,4 +26,3 @@ class AuthenticateUser:
         except Exception as _:
             pass
         raise exceptions.AuthenticationError(Message.invalid_credentials)
-    

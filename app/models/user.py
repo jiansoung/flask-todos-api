@@ -26,8 +26,8 @@ class User(ModelBase):
         password = params['password']
         password_digest = User.generate_password_digest(password)
         user = User(
-            name=params['name'], 
-            email=params['email'].lower(), 
+            name=params['name'],
+            email=params['email'].lower(),
             password_digest=password_digest,
         )
         db.session.add(user)
