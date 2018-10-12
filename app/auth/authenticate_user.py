@@ -8,7 +8,7 @@ from app.controllers import exceptions
 
 class AuthenticateUser:
     def __init__(self, email, password):
-        self.__email = email.lower()
+        self.__email = email
         self.__password = password
 
     @property
