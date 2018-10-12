@@ -14,8 +14,7 @@ class JsonWebToken:
         if expiration:
             exp = expiration
         else:
-            ONE_DAY = 24 * 60 * 60
-            exp = datetime.datetime.utcnow() + datetime.timedelta(seconds=ONE_DAY)
+            exp = datetime.datetime.utcnow() + datetime.timedelta(days=1)
         payload['exp'] = exp
         return jwt.encode(payload, JsonWebToken.SECRET_KEY).decode()
 
