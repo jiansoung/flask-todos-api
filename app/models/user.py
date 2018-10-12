@@ -6,6 +6,7 @@ from app import db, bcrypt
 from sqlalchemy.orm import validates
 from .concerns import ModelBase
 from .concerns import CaseInsensitiveString
+from .concerns import exception_handler
 
 
 class User(ModelBase):
@@ -28,6 +29,7 @@ class User(ModelBase):
         )
 
     @staticmethod
+    @exception_handler.sqlalchemy_error_handler
     def create(params):
         password = params['password']
         password_digest = User.generate_password_digest(password)
@@ -44,6 +46,7 @@ class User(ModelBase):
         db.session.delete(self)
         db.session.commit()
 
+    @exception_handler.sqlalchemy_error_handler
     def update(self, params):
         if 'name' in params:
             self.name = params['name']
