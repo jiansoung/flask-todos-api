@@ -18,11 +18,7 @@ class AuthenticateUser:
 
     @property
     def __user(self):
-        q = User.query.filter_by(email = self.__email)
-        try:
-            user = q.first()
-            if user.authenticate(self.__password):
-                return user
-        except Exception as _:
-            pass
+        user = User.query.filter_by(email=self.__email).first()
+        if user and user.authenticate(self.__password):
+            return user
         raise exceptions.AuthenticationError(Message.invalid_credentials)
