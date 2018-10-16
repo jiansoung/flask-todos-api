@@ -2,7 +2,15 @@
 
 import copy
 import functools
+from flask import g
 from flask import request
+from app.auth import AuthorizeApiRequest
+
+
+def authorize_request():
+    print(request.headers)
+    current_user = AuthorizeApiRequest(request.headers).user
+    g.current_user = current_user
 
 
 def only_allow(view_functions, blueprint):

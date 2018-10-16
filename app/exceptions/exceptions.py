@@ -11,7 +11,7 @@ class RecordInvalid(exceptions.UnprocessableEntity):
     pass
 
 
-class MissingToken(Exception):
+class MissingToken(exceptions.UnprocessableEntity):
     pass
 
 

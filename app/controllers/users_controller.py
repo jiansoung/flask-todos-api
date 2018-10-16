@@ -4,7 +4,7 @@ from flask import Blueprint, request, jsonify
 from app.models import User
 from app.lib import Message
 from app.auth import AuthenticateUser
-from .concerns import only_allow, dict_copy
+from .concerns import only_allow, dict_copy, authorize_request
 
 __all__ = []
 blueprint = Blueprint('users_controller', __name__)
@@ -46,6 +46,12 @@ def destroy(user_id):
     user = request.user
     user.destroy()
     return jsonify(), 204
+
+
+@blueprint.before_request
+@only_allow([index, show, update, destroy], blueprint)
+def need_authorize_request():
+    authorize_request()
 
 
 @blueprint.before_request

@@ -3,7 +3,7 @@
 from app.models import User
 from app.lib import Message
 from app.lib import JsonWebToken
-from app.controllers import exceptions
+from app.exceptions import exceptions
 
 
 class AuthenticateUser:

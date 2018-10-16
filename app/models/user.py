@@ -6,7 +6,7 @@ from app import db, bcrypt
 from sqlalchemy.orm import validates
 from .concerns import ModelBase
 from .concerns import CaseInsensitiveString
-from .concerns import exception_handler
+from app.exceptions import exception_handler
 
 
 class User(ModelBase):

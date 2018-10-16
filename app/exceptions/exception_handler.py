@@ -11,5 +11,9 @@ def bad_request(error):
     return jsonify(message=error.name), 422
 
 
+def missing_token(error):
+    return jsonify(message=error.name), 422
+
+
 def invalid_token(error):
     pass

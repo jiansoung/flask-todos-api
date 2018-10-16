@@ -3,7 +3,7 @@
 import jwt
 import datetime
 from app import app
-from app.controllers import exceptions
+from app.exceptions import exceptions
 
 
 class JsonWebToken:
