@@ -8,8 +8,8 @@ class Todo(ModelBase):
     title = db.Column(db.String(255), nullable=False)
     created_by = db.Column(db.String(255), nullable=False)
 
-    #user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
-    #user = db.relationship('User', backref=db.backref('todos', lazy=True))
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    user = db.relationship('User', backref=db.backref('todos', lazy=True))
 
     def to_dict(self):
         return dict(
@@ -19,7 +19,7 @@ class Todo(ModelBase):
             created_at=self.created_at,
             updated_at=self.updated_at,
             items=[item.to_dict() for item in self.items],
-            #user_id=self.user_id,
+            user_id=self.user_id,
         )
 
     @staticmethod
