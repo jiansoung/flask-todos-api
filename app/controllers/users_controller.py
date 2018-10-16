@@ -27,6 +27,14 @@ def create():
     return jsonify(response), 201
 
 
+@blueprint.route("/signin", methods=["POST"])
+def signin():
+    user_params = request.user_params
+    email, password = user_params['email'], user_params['password']
+    auth_token = AuthenticateUser(email, password).auth_token
+    return jsonify(auth_token=auth_token), 200
+
+
 @blueprint.route("/users/<int:user_id>")
 def show(user_id):
     user = request.user
@@ -63,7 +71,7 @@ def set_user():
 
 
 @blueprint.before_request
-@only_allow([create, update], blueprint)
+@only_allow([signin, create, update], blueprint)
 def set_user_params():
     params = request.json
     keys = ['name', 'email', 'password']
