@@ -7,23 +7,23 @@ from werkzeug import exceptions
 
 
 def not_found(error):
-    return jsonify(message=error.name), 404
+    return jsonify(message=error.description), error.code
 
 
 def bad_request(error):
-    return jsonify(message=error.name), 422
+    return jsonify(message=error.description), error.code
 
 
 def missing_token(error):
-    return jsonify(message=error.name), 422
+    return jsonify(message=error.description), error.code
 
 
 def invalid_token(error):
-    pass
+    return jsonify(message=error.description), error.code
 
 
 def unauthorized_request(error):
-    return jsonify(message=error.name)
+    return jsonify(message=error.description), error.code
 
 
 def sqlalchemy_error_handler(func):
