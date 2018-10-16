@@ -15,9 +15,9 @@ class MissingToken(exceptions.UnprocessableEntity):
     pass
 
 
-class InvalidToken(Exception):
+class InvalidToken(exceptions.UnprocessableEntity):
     pass
 
 
-class AuthenticationError(Exception):
+class AuthenticationError(exceptions.Unauthorized):
     pass
