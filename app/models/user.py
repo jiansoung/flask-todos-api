@@ -6,6 +6,7 @@ from app import db, bcrypt
 from sqlalchemy.orm import validates
 from .concerns import ModelBase
 from .concerns import CaseInsensitiveString
+from app.models import Todo
 from app.exceptions import exception_handler
 
 
@@ -62,6 +63,12 @@ class User(ModelBase):
     def authenticate(self, password):
         password_hash = base64.b64decode(self.password_digest)
         return bcrypt.check_password_hash(password_hash, password)
+
+    def create_todo(self, todo_params):
+        todo = Todo(**todo_params)
+        self.todos.append(todo)
+        db.session.commit()
+        return todo
 
     def __repr__(self):
         return '<User %r>' % self.name
