@@ -2,7 +2,7 @@
 
 from flask import Blueprint, request, jsonify
 from app.models import Todo, Item
-from .concerns import only_allow, dict_copy
+from .concerns import only_allow, dict_copy, authorize_request
 
 __all__ = []
 blueprint = Blueprint('items_controller', __name__)
@@ -41,6 +41,11 @@ def destroy(todo_id, item_id):
     item = request.todo_item
     item.destroy()
     return jsonify(), 204
+
+
+@blueprint.before_request
+def need_authorize_request():
+    authorize_request()
 
 
 @blueprint.before_request

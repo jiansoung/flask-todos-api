@@ -3,7 +3,9 @@
 import functools
 from flask import jsonify
 from sqlalchemy.exc import SQLAlchemyError
-from werkzeug import exceptions
+#from werkzeug import exceptions
+from app.exceptions import exceptions
+from app.lib import Message
 
 
 def not_found(error):
@@ -33,5 +35,5 @@ def sqlalchemy_error_handler(func):
             return func(*args, **kwargs)
         except SQLAlchemyError as e:
             # db.session.rollback()
-            raise exceptions.UnprocessableEntity(e)
+            raise exceptions.RecordInvalid(Message.account_not_created)
     return decorator

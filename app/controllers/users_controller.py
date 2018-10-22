@@ -4,7 +4,7 @@ from flask import Blueprint, request, jsonify
 from app.models import User
 from app.lib import Message
 from app.auth import AuthenticateUser
-from .concerns import only_allow, dict_copy, authorize_request
+from .concerns import only_allow, dict_copy
 
 __all__ = []
 blueprint = Blueprint('users_controller', __name__)
