@@ -19,9 +19,9 @@ def index():
 
 @blueprint.route("/todos", methods=["POST"])
 def create():
+    user = g.current_user
     todo_params = request.todo_params
-    todo_params['user'] = g.current_user
-    todo = Todo.create(todo_params)
+    todo = user.create_todo(todo_params)
     return jsonify(todo.to_dict()), 201
 
 
