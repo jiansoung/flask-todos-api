@@ -18,6 +18,11 @@ class User(ModelBase):
     def convert_to_lower(self, key, value):
         return value.lower()
 
+    @validates('password_digest')
+    def convert_to_password_digest(self, key, value):
+        password_hash = bcrypt.generate_password_hash(value)
+        return base64.b64encode(password_hash).decode()
+
     def to_dict(self):
         return dict(
             id=self.id,
@@ -31,12 +36,10 @@ class User(ModelBase):
     @staticmethod
     @exception_handler.sqlalchemy_error_handler
     def create(params):
-        password = params['password']
-        password_digest = User.generate_password_digest(password)
         user = User(
             name=params['name'],
             email=params['email'],
-            password_digest=password_digest,
+            password_digest=params['password'],
         )
         db.session.add(user)
         db.session.commit()
@@ -53,19 +56,12 @@ class User(ModelBase):
         if 'email' in params:
             self.email = params['email']
         if 'password' in params:
-            password = params['password']
-            password_digest = User.generate_password_digest(password)
-            self.password_digest = password_digest
+            self.password_digest = params['password']
         db.session.commit()
 
     def authenticate(self, password):
         password_hash = base64.b64decode(self.password_digest)
         return bcrypt.check_password_hash(password_hash, password)
-
-    @staticmethod
-    def generate_password_digest(password):
-        password_hash = bcrypt.generate_password_hash(password)
-        return base64.b64encode(password_hash).decode()
 
     def __repr__(self):
         return '<User %r>' % self.name
