@@ -1,13 +1,13 @@
 """Create the first database migration
 
 Revision ID: 2378bf91d7d5
-Revises: 
+Revises:
 Create Date: 2018-10-23 10:05:47.919871
 
 """
 from alembic import op
 import sqlalchemy as sa
-
+import app
 
 # revision identifiers, used by Alembic.
 revision = '2378bf91d7d5'
