@@ -2,8 +2,9 @@
 
 import base64
 
-from app import db, bcrypt
 from sqlalchemy.orm import validates
+
+from app.extensions import db, bcrypt
 from .concerns import ModelBase
 from .concerns import CaseInsensitiveString
 from app.models import Todo

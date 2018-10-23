@@ -1,9 +1,10 @@
 # -*- coding: utf-8 -*-
 
-from app import db
 from sqlalchemy import func
 from sqlalchemy import String
 from sqlalchemy.ext.declarative import declared_attr
+
+from app.extensions import db
 
 
 class CaseInsensitiveString(String):

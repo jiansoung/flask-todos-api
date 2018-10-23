@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from app import db
+from app.extensions import db
 from app.models import Item
 from .concerns import ModelBase
 
