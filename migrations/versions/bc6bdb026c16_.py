@@ -1,16 +1,18 @@
-"""Create the first database migration
+"""empty message
 
-Revision ID: 2378bf91d7d5
+Revision ID: bc6bdb026c16
 Revises:
-Create Date: 2018-10-23 10:05:47.919871
+Create Date: 2018-10-23 21:37:34.263131
 
 """
 from alembic import op
 import sqlalchemy as sa
-import app
+
+import app.models.concerns.model_base as mb
+
 
 # revision identifiers, used by Alembic.
-revision = '2378bf91d7d5'
+revision = 'bc6bdb026c16'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -23,7 +25,7 @@ def upgrade():
     sa.Column('created_at', sa.DateTime(), nullable=True),
     sa.Column('updated_at', sa.DateTime(), nullable=True),
     sa.Column('name', sa.String(length=255), nullable=False),
-    sa.Column('email', app.models.concerns.model_base.CaseInsensitiveString(length=255), nullable=False),
+    sa.Column('email', mb.CaseInsensitiveString(length=255), nullable=False),
     sa.Column('password_digest', sa.String(length=255), nullable=False),
     sa.PrimaryKeyConstraint('id'),
     sa.UniqueConstraint('email')
