@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from app import db
+from app.models import Item
 from .concerns import ModelBase
 
 
@@ -39,6 +40,12 @@ class Todo(ModelBase):
         if 'created_by' in params:
             self.created_by = params['created_by']
         db.session.commit()
+
+    def create_item(self, item_params):
+        item = Item(**item_params)
+        self.items.append(item)
+        db.session.commit()
+        return item
 
     def __repr__(self):
         return '<Todo %r>' % self.title
