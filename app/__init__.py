@@ -13,3 +13,5 @@ migrate = Migrate(app, db)
 
 from app import models
 from app import controllers
+
+controllers.init_app(app)
