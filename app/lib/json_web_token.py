@@ -2,12 +2,13 @@
 
 import jwt
 import datetime
-from app import app
+from app import config
+from flask import current_app as app
 from app.exceptions import exceptions
 
 
 class JsonWebToken:
-    SECRET_KEY = app.secret_key
+    SECRET_KEY = config.SECRET_KEY
 
     @staticmethod
     def encode(payload, expiration=None):
